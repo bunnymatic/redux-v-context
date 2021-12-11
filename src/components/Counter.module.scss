@@ -1,0 +1,31 @@
+@use "theme/colors.scss";
+@use "theme/typography.scss";
+
+.container {
+  @include typography.body-text;
+}
+
+.button {
+  @include typography.body-text;
+
+  align-items: center;
+  background-color: colors.$blue;
+  border: none;
+  border-bottom: 2px solid colors.$blue-darker;
+  border-radius: 15px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  margin: 20px auto;
+  width: 100px;
+
+  &:hover {
+    background-color: colors.$blue-lighter;
+  }
+
+  &:active {
+    background-color: colors.$white;
+  }
+}
