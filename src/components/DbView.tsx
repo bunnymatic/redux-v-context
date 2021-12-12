@@ -24,8 +24,8 @@ export const DbView: FC<DbViewProps> = ({ dirtySince }) => {
     <table>
       <tbody>
         {data?.map((datum) => (
-          <tr>
-            <td key={datum.id}>{datum.id}</td>
+          <tr key={datum.id}>
+            <td>{datum.id}</td>
             <td>{datum.value}</td>
           </tr>
         ))}

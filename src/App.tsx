@@ -5,19 +5,13 @@ import { ContextModal } from "./components/modals";
 import { useDirtyState } from "./hooks/useDirtyState";
 import { ContextPropsModal } from "./components/modals/ContextPropsModal/ContextPropsModal";
 import { ItemsProvider } from "hooks/useItemsContext";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { ReduxModal } from "./components/modals/ReduxModal/ReduxModal";
 import { store } from "./redux/store";
 import { ReduxDbView } from "./components/ReduxDbView";
 import { ReduxState } from "./components/ReduxState";
-
-const ReduxPropsModal: FC = () => {
-  return (
-    <section>
-      <h2>Redux Props Modal</h2>
-    </section>
-  );
-};
+import { ReduxPropsModal } from "./components/modals/ReduxPropsModal/ReduxModal";
+import { selectItems } from "./redux/selectors";
 
 const App = (): JSX.Element => {
   const [itemsDirty, setItemsDirty] = useDirtyState();
@@ -25,6 +19,8 @@ const App = (): JSX.Element => {
   const itemsRefetch = () => {
     setItemsDirty();
   };
+
+  const items = useSelector(selectItems);
 
   return (
     <div className={styles.container}>
@@ -42,7 +38,7 @@ const App = (): JSX.Element => {
         <ReduxModal onClose={() => {}} />
         <ContextModal onClose={itemsRefetch} />
         <ContextModal unrenderOnClose={true} onClose={itemsRefetch} />
-        <ReduxPropsModal />
+        <ReduxPropsModal items={items} onClose={() => {}} />
         <ContextPropsModal onClose={itemsRefetch} />
       </ItemsProvider>
     </div>

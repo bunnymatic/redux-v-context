@@ -14,7 +14,7 @@ export const ContextPropsModal: FC<ContextModalProps> = ({
 
   return (
     <section>
-      <h2>Context Modal</h2>
+      <h2>Context Props Modal</h2>
       {items ? null : <div>no items</div>}
 
       <AddDataModal
