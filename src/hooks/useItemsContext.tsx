@@ -1,17 +1,22 @@
 import React, { FC, useState, useContext } from "react";
-import { Item } from "./types";
 import { createContext } from "../common/contextHelpers";
+import { Item } from "../types";
+import { db } from "../db";
 
 export interface ItemsContextType {
-  items: Record<string, Item[]>;
-  add: () => void;
+  items: Item[];
   assign: (items: Item[]) => void;
 }
 
-export const ItemsContext = createContext<ItemContextType>();
+export const ItemsContext = createContext<ItemsContextType>();
 
 export const ItemsProvider: FC = ({ children }) => {
   const [items, setItems] = useState<Item[]>([]);
+
+  React.useEffect(() => {
+    console.log("Refetching Items");
+    db.items.list().then(setItems);
+  }, []);
 
   return (
     <ItemsContext.Provider value={{ items, assign: setItems }}>

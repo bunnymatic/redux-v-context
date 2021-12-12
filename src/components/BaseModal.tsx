@@ -2,14 +2,17 @@ import Modal from "react-modal";
 import modalStyles from "./BaseModal.module.scss";
 import React, { FC } from "react";
 import { useModalState } from "../hooks/useModalState";
+import { JSONView } from "./JSONView";
 
 interface BaseModalProps {
   buttonText: string;
+  renderWhenClosed?: boolean;
   onClose: () => void;
 }
 export const BaseModal: FC<BaseModalProps> = ({
   onClose,
   buttonText,
+  renderWhenClosed,
   children,
 }) => {
   const { open, close: _close, isOpen } = useModalState();
@@ -21,12 +24,22 @@ export const BaseModal: FC<BaseModalProps> = ({
   return (
     <div>
       <button onClick={open}>{buttonText}</button>
-      <Modal isOpen={isOpen} onRequestClose={close}>
-        <button className={modalStyles.closeButton} onClick={close}>
-          X
-        </button>
-        {children}
-      </Modal>
+      <JSONView object={{ renderWhenClosed, isOpen }} />
+      {(isOpen || renderWhenClosed) && (
+        <>
+          <div>modal in dom</div>
+          <Modal
+            style={{ content: { left: "200px" } }}
+            isOpen={isOpen}
+            onRequestClose={close}
+          >
+            <button className={modalStyles.closeButton} onClick={close}>
+              X
+            </button>
+            {children}
+          </Modal>
+        </>
+      )}
     </div>
   );
 };

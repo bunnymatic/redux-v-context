@@ -1,4 +1,3 @@
-import { randomInt } from "crypto";
 import { Item } from "./types";
 
 const data: Item[] = [

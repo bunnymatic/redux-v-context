@@ -49,12 +49,7 @@ export const AddDataModal: FC<AddDataModalProps> = ({
       </>
     ),
     confirm: <button onClick={addItem}> let's go </button>,
-    success: (
-      <>
-        <div> nice work. Added an item </div>
-        <button onClick={reset}>add another</button>
-      </>
-    ),
+    success: <div> nice work. Added an item </div>,
   };
 
   return (

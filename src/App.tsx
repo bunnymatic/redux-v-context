@@ -3,6 +3,8 @@ import React, { FC } from "react";
 import { DbView } from "./components/DbView";
 import { ContextModal } from "./components/modals";
 import { useDirtyState } from "./hooks/useDirtyState";
+import { ContextPropsModal } from "./components/modals/ContextPropsModal/ContextPropsModal";
+import { ItemsProvider } from "hooks/useItemsContext";
 
 const ReduxModal: FC = () => {
   return (
@@ -20,20 +22,12 @@ const ReduxPropsModal: FC = () => {
   );
 };
 
-const ContextPropsModal: FC = () => {
-  return (
-    <section>
-      <h2>Context Props Modal</h2>
-    </section>
-  );
-};
-
 const App = (): JSX.Element => {
-  const [itemsDirty, setItemsDirty] = useDirtyState<number>(Date.now())
+  const [itemsDirty, setItemsDirty] = useDirtyState();
 
   const itemsRefetch = () => {
-    setItemsDirty()
-  }
+    setItemsDirty();
+  };
 
   return (
     <div className={styles.container}>
@@ -42,10 +36,13 @@ const App = (): JSX.Element => {
         <DbView dirtySince={itemsDirty} />
       </div>
 
-      <ReduxModal />
-      <ContextModal onClose={itemsRefetch} />
-      <ReduxPropsModal />
-      <ContextPropsModal />
+      <ItemsProvider>
+        <ReduxModal />
+        <ContextModal onClose={itemsRefetch} />
+        <ContextModal unrenderOnClose={true} onClose={itemsRefetch} />
+        <ReduxPropsModal />
+        <ContextPropsModal onClose={itemsRefetch} />
+      </ItemsProvider>
     </div>
   );
 };
