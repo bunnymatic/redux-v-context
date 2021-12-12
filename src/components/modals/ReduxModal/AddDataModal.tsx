@@ -3,7 +3,14 @@ import { db } from "../../../db";
 import { BaseModal } from "../../BaseModal";
 import { JSONView } from "../../JSONView";
 import { useItemsContext } from "../../../hooks/useItemsContext";
-import { ModalSubcomponentKeys, ModalSubcomponentsType } from "../../../types";
+import {
+  Item,
+  ModalSubcomponentKeys,
+  ModalSubcomponentsType,
+} from "../../../types";
+import { addItem } from "../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { selectItems } from "../../../redux/selectors";
 
 interface AddDataModalProps {
   onAdd: () => void;
@@ -16,7 +23,8 @@ export const AddDataModal: FC<AddDataModalProps> = ({
   onClose,
   renderWhenClosed,
 }) => {
-  const { items } = useItemsContext();
+  const dispatch = useDispatch();
+  const items = useSelector(selectItems);
   const [current, setCurrent] = React.useState<ModalSubcomponentKeys>("form");
   const advance = (page: ModalSubcomponentKeys) => {
     return () => {
@@ -33,12 +41,10 @@ export const AddDataModal: FC<AddDataModalProps> = ({
     onClose && onClose();
   };
 
-  const addItem = () => {
-    db.items.add().then((item) => {
-      console.log("added", { item });
-      advance("success")();
-      onAdd();
-    });
+  const handleAddItem = () => {
+    dispatch(addItem());
+    advance("success")();
+    onAdd();
   };
 
   const components: ModalSubcomponentsType = {
@@ -48,7 +54,7 @@ export const AddDataModal: FC<AddDataModalProps> = ({
         <button onClick={advance("confirm")}>yes</button>
       </>
     ),
-    confirm: <button onClick={addItem}> let's go </button>,
+    confirm: <button onClick={handleAddItem}> let's go </button>,
     success: (
       <>
         <div> nice work. Added an item </div>
@@ -63,6 +69,7 @@ export const AddDataModal: FC<AddDataModalProps> = ({
         buttonText="Add"
         onClose={handleClose}
         renderWhenClosed={renderWhenClosed}
+        header="Redux Modal: Add"
       >
         <JSONView object={{ current, items }} />
         {components[current]}

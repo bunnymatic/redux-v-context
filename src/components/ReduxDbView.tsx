@@ -3,17 +3,17 @@ import { db } from "../db";
 import { JSONView } from "./JSONView";
 import { isEmpty } from "../common/utils";
 import React, { FC } from "react";
+import { useSelector } from "react-redux";
+import { selectLastUpdate } from "../redux/selectors";
 
-interface DbViewProps {
-  dirtySince: number | undefined;
-}
+interface DbViewProps {}
 
-export const DbView: FC<DbViewProps> = ({ dirtySince }) => {
+export const ReduxDbView: FC<DbViewProps> = () => {
   const [data, setData] = React.useState<Item[]>();
-  const shouldRefetch = dirtySince ?? Date.now();
+  const shouldRefetch = useSelector(selectLastUpdate);
 
   React.useEffect(() => {
-    console.log("DbView:refetch items", shouldRefetch);
+    console.log("ReduxDbView:refetch items", shouldRefetch);
     db.items.list().then(setData);
   }, [shouldRefetch]);
 

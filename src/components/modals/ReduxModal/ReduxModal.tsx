@@ -1,48 +1,27 @@
-import React, { FC, useState } from "react";
-import { ItemsProvider, useItemsContext } from "../../../hooks/useItemsContext";
+import React, { FC } from "react";
 import { AddDataModal } from "./AddDataModal";
-import { db } from "../../../db";
+import { useSelector } from "react-redux";
+import { selectItems } from "../../../redux/selectors";
+import { JSONView } from "../../JSONView";
 
-interface ContextModalProps {
+interface ReduxModalProps {
   onClose: () => void;
   unrenderOnClose?: boolean;
 }
-const ReduxModal: FC<ContextModalProps> = ({ onClose, unrenderOnClose }) => {
-  // const [itemsDirty, setItemsDirty] = useState<number>(Date.now());
-  // const { items } = useSelector();
-  //
-  // const markItemsDirty = () => {
-  //   setItemsDirty(Date.now());
-  // };
-  //
-  // React.useEffect(() => {
-  //   console.log("Refetching Items");
-  //   db.items.list().then(assign);
-  // }, [itemsDirty]);
-  //
-  // return (
-  //   <section>
-  //     <h2>Context Modal</h2>
-  //     {items ? null : <div>no items</div>}
-  //
-  //     <AddDataModal
-  //       onAdd={markItemsDirty}
-  //       onClose={onClose}
-  //       renderWhenClosed={unrenderOnClose}
-  //     />
-  //   </section>
-  // );
+const ReduxModal: FC<ReduxModalProps> = ({ onClose, unrenderOnClose }) => {
+  const items = useSelector(selectItems);
+
   return (
     <section>
-      <h2>Context Modal</h2>
+      <h2>Redux Modal</h2>
+      {items ? <JSONView object={items} /> : <div>no items</div>}
+      <AddDataModal
+        onAdd={() => {}}
+        onClose={onClose}
+        renderWhenClosed={unrenderOnClose}
+      />
     </section>
   );
 };
 
-const ContextModalWithProvider: FC<ContextModalProps> = (props) => (
-  <ItemsProvider>
-    <ReduxModal {...props} />
-  </ItemsProvider>
-);
-
-export { ContextModalWithProvider as ContextModal };
+export { ReduxModal };

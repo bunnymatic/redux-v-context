@@ -60,6 +60,7 @@ export const AddDataModal: FC<AddDataModalProps> = ({
   return (
     <div>
       <BaseModal
+        header="Context Modal: Add"
         buttonText="Add"
         onClose={handleClose}
         renderWhenClosed={renderWhenClosed}

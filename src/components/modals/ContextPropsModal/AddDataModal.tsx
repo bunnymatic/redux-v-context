@@ -58,6 +58,7 @@ export const AddDataModal: FC<AddDataModalProps> = ({
         buttonText="Add"
         onClose={handleClose}
         renderWhenClosed={renderWhenClosed}
+        header="ContextProps Modal : Add"
       >
         <JSONView object={{ current, items }} />
         {components[current]}

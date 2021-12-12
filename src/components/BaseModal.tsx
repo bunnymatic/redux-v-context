@@ -5,11 +5,13 @@ import { useModalState } from "../hooks/useModalState";
 import { JSONView } from "./JSONView";
 
 interface BaseModalProps {
+  header: string;
   buttonText: string;
   renderWhenClosed?: boolean;
   onClose: () => void;
 }
 export const BaseModal: FC<BaseModalProps> = ({
+  header,
   onClose,
   buttonText,
   renderWhenClosed,
@@ -36,7 +38,10 @@ export const BaseModal: FC<BaseModalProps> = ({
             <button className={modalStyles.closeButton} onClick={close}>
               X
             </button>
-            {children}
+            <header>
+              <h4>{header}</h4>
+            </header>
+            <div>{children}</div>
           </Modal>
         </>
       )}

@@ -1,6 +1,10 @@
 @use "theme/colors.scss";
 @use "theme/typography.scss";
 
+html {
+  font-size: 10px;
+}
+
 body * {
   @include typography.default-font-face;
 }
