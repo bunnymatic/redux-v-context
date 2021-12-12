@@ -1,0 +1,58 @@
+import React, { FC } from "react";
+import { db } from '../../../db';
+import { BaseModal } from "../../BaseModal";
+import { JSONView } from "../../JSONView";
+import { ModalSubcomponentKeys, ModalSubcomponentsType } from "../../types";
+import { useItemsContext } from "../../../hooks/useItemsContext";
+
+interface AddDataModalProps {
+  onAdd: () => void;
+  onClose: () => void;
+}
+
+export const AddDataModal: FC<AddDataModalProps> = ({onAdd, onClose}) => {
+  const { items } = useItemsContext();
+  const [current, setCurrent] = React.useState<ModalSubcomponentKeys>("form");
+  const advance = (page: ModalSubcomponentKeys) => {
+    return () => {
+      setCurrent(page);
+    };
+  };
+
+  const reset = () => {
+    setCurrent("form");
+  };
+
+  const handleClose = () => {
+    reset();
+    onClose && onClose();
+  }
+
+  const addItem = () => {
+    db.items.add().then((item) => {
+      console.log("added", {item})
+      advance("success")();
+      onAdd();
+    })
+  };
+
+  const components: ModalSubcomponentsType = {
+    form: (
+      <>
+        <div>are you sure?</div>
+        <button onClick={advance("confirm")}>yes</button>
+      </>
+    ),
+    confirm: <button onClick={addItem}> let's go </button>,
+    success: <div> nice work. Added an item </div>,
+  };
+
+  return (
+    <div>
+      <BaseModal buttonText="Add" onClose={handleClose}>
+        <JSONView object={{ current, items }} />
+        {components[current]}
+      </BaseModal>
+    </div>
+  );
+};

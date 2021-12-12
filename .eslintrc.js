@@ -9,17 +9,18 @@ module.exports = {
   ],
   rules: {
     "@typescript-eslint/no-unused-vars": [
-      "error",
+      "warn",
       {
         args: "after-used",
         argsIgnorePattern: "^_",
         varsIgnorePattern: "^_",
       },
     ],
-    "no-var": "error",
-    "prettier/prettier": "error",
+    "no-var": "warn",
+    "prettier/prettier": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/no-empty-interface": "off"
   },
   extends: [
     "react-app",

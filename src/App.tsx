@@ -1,26 +1,51 @@
-import logo from "./logo.svg";
 import styles from "./App.module.scss";
-import Counter from "components/Counter";
+import React, { FC } from "react";
+import { DbView } from "./components/DbView";
+import { ContextModal } from "./components/modals";
+import { useDirtyState } from "./hooks/useDirtyState";
+
+const ReduxModal: FC = () => {
+  return (
+    <section>
+      <h2>Redux Modal</h2>
+    </section>
+  );
+};
+
+const ReduxPropsModal: FC = () => {
+  return (
+    <section>
+      <h2>Redux Props Modal</h2>
+    </section>
+  );
+};
+
+const ContextPropsModal: FC = () => {
+  return (
+    <section>
+      <h2>Context Props Modal</h2>
+    </section>
+  );
+};
 
 const App = (): JSX.Element => {
+  const [itemsDirty, setItemsDirty] = useDirtyState<number>(Date.now())
+
+  const itemsRefetch = () => {
+    setItemsDirty()
+  }
+
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <Counter />
-        <img src={logo} className={styles.logo} alt="logo" />
-        <p>
-          Edit <code className={styles.code}>src/App.tsx</code> and save to
-          reload.
-        </p>
-        <a
-          className={styles.link}
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <h2>db</h2>
+        <DbView dirtySince={itemsDirty} />
+      </div>
+
+      <ReduxModal />
+      <ContextModal onClose={itemsRefetch} />
+      <ReduxPropsModal />
+      <ContextPropsModal />
     </div>
   );
 };

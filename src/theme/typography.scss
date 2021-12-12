@@ -4,6 +4,10 @@ $font-sans-serif: -apple-system, blinkmacsystemfont, "Segoe UI", "Roboto",
 $font-monospace: source-code-pro, menlo, monaco, consolas, "Courier New",
   monospace;
 
+@mixin default-font-face {
+  font-family: $font-sans-serif;
+}
+
 @mixin body-text {
   font-family: $font-sans-serif;
   font-size: 16px;

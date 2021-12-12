@@ -5,7 +5,7 @@ module.exports = {
     "declaration-empty-line-before": null,
     "declaration-colon-newline-after": null,
     "declaration-no-important": true,
-    "max-nesting-depth": 1,
+    "max-nesting-depth": 3,
     "scale-unlimited/declaration-strict-value": [
       "/color/",
       {
@@ -38,8 +38,8 @@ module.exports = {
       },
     ],
     "scss/no-duplicate-dollar-variables": true,
-    "scss/selector-no-redundant-nesting-selector": true,
-    "selector-max-compound-selectors": 1,
+    "scss/selector-no-redundant-nesting-selector": null,
+    "selector-max-compound-selectors": 3,
     "selector-max-id": 0,
     "selector-no-qualifying-type": true,
     "string-quotes": "double",
