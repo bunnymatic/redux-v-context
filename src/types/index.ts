@@ -10,3 +10,5 @@ export interface ModalSubcomponentsType {
 }
 
 export type ModalSubcomponentKeys = keyof ModalSubcomponentsType;
+
+export * from "./ajax.types";
