@@ -25,8 +25,13 @@ const itemsSlice = createSlice({
   initialState,
   reducers: {
     addedItem(state, action: PayloadAction<Item>) {
-      state.items.push(action.payload);
-      state.lastUpdate = Date.now();
+      // state.items.push(action.payload);
+      // state.lastUpdate = Date.now();
+      return {
+        ...state,
+        items: [...state.items, action.payload],
+        lastUpdate: Date.now(),
+      };
     },
   },
 });

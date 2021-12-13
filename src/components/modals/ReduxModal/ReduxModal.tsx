@@ -3,12 +3,15 @@ import { AddDataModal } from "./AddDataModal";
 import { useSelector } from "react-redux";
 import { selectItems } from "../../../redux/selectors";
 import { JSONView } from "../../JSONView";
+import { logRendering } from "../../../common/utils";
 
 interface ReduxModalProps {
   onClose: () => void;
   unrenderOnClose?: boolean;
 }
 const ReduxModal: FC<ReduxModalProps> = ({ onClose, unrenderOnClose }) => {
+  logRendering("ReduxModal");
+
   const items = useSelector(selectItems);
 
   return (

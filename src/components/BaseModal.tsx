@@ -31,7 +31,12 @@ export const BaseModal: FC<BaseModalProps> = ({
         <>
           <div>modal in dom</div>
           <Modal
-            style={{ content: { left: "200px" } }}
+            style={{
+              content: {
+                left: "200px",
+                top: "200px",
+              },
+            }}
             isOpen={isOpen}
             onRequestClose={close}
           >

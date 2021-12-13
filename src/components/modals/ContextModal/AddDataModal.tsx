@@ -30,6 +30,7 @@ export const AddDataModal: FC<AddDataModalProps> = ({
 
   const handleClose = () => {
     reset();
+    console.log({ onClose });
     onClose && onClose();
   };
 

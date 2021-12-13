@@ -12,9 +12,11 @@ import { ReduxDbView } from "./components/ReduxDbView";
 import { ReduxState } from "./components/ReduxState";
 import { ReduxPropsModal } from "./components/modals/ReduxPropsModal/ReduxModal";
 import { selectItems } from "./redux/selectors";
+import { logRendering } from "./common/utils";
 
 const App = (): JSX.Element => {
-  const [itemsDirty, setItemsDirty] = useDirtyState();
+  logRendering("App");
+  const [_, setItemsDirty] = useDirtyState();
 
   const itemsRefetch = () => {
     setItemsDirty();
@@ -26,7 +28,7 @@ const App = (): JSX.Element => {
     <div className={styles.container}>
       <div>
         <h2>db: updates triggered by state</h2>
-        <DbView dirtySince={itemsDirty} />
+        <DbView />
       </div>
       <div>
         <h2>db: updates triggered by redux</h2>
@@ -34,11 +36,15 @@ const App = (): JSX.Element => {
       </div>
 
       <ReduxState />
+      <ReduxPropsModal items={items} onClose={() => {}} />
       <ItemsProvider>
         <ReduxModal onClose={() => {}} />
-        <ContextModal onClose={itemsRefetch} />
-        <ContextModal unrenderOnClose={true} onClose={itemsRefetch} />
-        <ReduxPropsModal items={items} onClose={() => {}} />
+        <ContextModal onClose={() => {}} onUpdate={itemsRefetch} />
+        <ContextModal
+          unrenderOnClose={true}
+          onUpdate={itemsRefetch}
+          onClose={() => {}}
+        />
         <ContextPropsModal onClose={itemsRefetch} />
       </ItemsProvider>
     </div>
